@@ -180,7 +180,7 @@ public class CPPHarnessGenerator implements HarnessGenerator {
         code.add("      char buf[100];");
         code.add("      ");
         code.add("      if (elapsed > CLOCKS_PER_SEC / 200) {");
-        code.add("         std::sprintf(buf, \"time %.2fs\", elapsed * (1.0/CLOCKS_PER_SEC));");
+        code.add("         std::sprintf(buf, \"time %.2fs\", double(elapsed) / CLOCKS_PER_SEC);");
         code.add("         info.push_back(buf);");
         code.add("      }");
         code.add("      ");
