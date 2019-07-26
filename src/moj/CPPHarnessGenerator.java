@@ -240,25 +240,16 @@ public class CPPHarnessGenerator implements HarnessGenerator {
 
         String baseName = paramType.getBaseName();
         boolean isLong = baseName.equals("long");
-        String typeName = "";
+        String typeName = paramType.getDescriptor(m_lang) + " " + name;
         if (paramType.getDimension() == 0) {
             // Scalar
-            typeName = paramType.getDescriptor(m_lang) + " " + name;
             if (isLong) {
                 contents = ConstantFormatting.formatLongForCPP(contents);
             }
         } else {
-            typeName = (isLong ? "long long" : baseName.toLowerCase()) + " " + name + "[]";
-
-            if (!isPlaceholder) {
-                if (m_targetCompiler.equals(Preferences.TARGETCOMPILER_VC) &&
-                        representsEmptyArray(contents)) {
-                    typeName = "// " + typeName;
-                    contents = "empty, commented out for VC++";
-                } else if (isLong) {
-                    // Vector of longs, add LL to constants
-                    contents = ConstantFormatting.formatLongArrayForCPP(contents);		      
-                }
+            if (!isPlaceholder && isLong) {
+                // Vector of longs, add LL to constants
+                contents = ConstantFormatting.formatLongArrayForCPP(contents);
             }
         }
 
@@ -272,21 +263,6 @@ public class CPPHarnessGenerator implements HarnessGenerator {
         }
 
         code.add("         " + typeName + " = " + contents + ";");
-    }
-
-    String vectorize(DataType type, String name, String contents, boolean isPlaceholder) {
-        if (type.getDimension() == 0) {
-            return name;
-        } else {
-            if (!isPlaceholder && 
-                    m_targetCompiler.equals(Preferences.TARGETCOMPILER_VC) &&
-                    representsEmptyArray(contents)) {
-                // Visual C++ empty array hack
-                return type.getDescriptor(m_lang) + "()";
-            }
-
-            return type.getDescriptor(m_lang) + "(" + name + ", " + name + " + (sizeof " + name + " / sizeof " + name + "[0]))";
-        }
     }
 
     void generateTestCase(TestCodeGenerationState code, int index, TestCase testCase, boolean isPlaceholder) {
@@ -320,7 +296,7 @@ public class CPPHarnessGenerator implements HarnessGenerator {
         }
         call.append(" = " + m_problem.getClassName() + "()." + m_problem.getMethodName() + "(");
         for (int i = 0; i < inputs.length; ++i) {
-            call.append(vectorize(paramTypes[i], paramNames[i], inputs[i], isPlaceholder));
+            call.append(paramNames[i]);
             if (i < inputs.length-1) {
                 call.append(", ");
             }
@@ -328,7 +304,7 @@ public class CPPHarnessGenerator implements HarnessGenerator {
         call.append(");");
         code.add("         " + call);
 
-        code.add("         return verify_case(casenum__, " + vectorize(returnType, "expected__", output, isPlaceholder) + ", received__, clock()-start__);");
+        code.add("         return verify_case(casenum__, expected__, received__, clock()-start__);");
     }
 
     void generateRunTestCase(TestCodeGenerationState code) {

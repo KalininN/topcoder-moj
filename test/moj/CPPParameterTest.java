@@ -58,15 +58,15 @@ public class CPPParameterTest {
                 {"long", "-9999999999", "long long var = -9999999999LL;"},
                 {"long", "2147483648",  "long long var = 2147483648LL;"},
 
-                {"int[]", "{-2147483648, 2147483647, 0, -1, 555}", "int var[] = {-2147483648, 2147483647, 0, -1, 555};"},
-                {"int[]", "{}",  "int var[] = {};"},
+                {"int[]", "{-2147483648, 2147483647, 0, -1, 555}", "vector<int> var = {-2147483648, 2147483647, 0, -1, 555};"},
+                {"int[]", "{}",  "vector<int> var = {};"},
 
-                {"String[]", "{\"a\",\n \"\",\n \"test test\"}", "string var[] = {\"a\",\n \"\",\n \"test test\"};"},
-                {"String[]", "{\"spaces  space\", \"a   a\"}", "string var[] = {\"spaces  space\", \"a   a\"};"},
+                {"String[]", "{\"a\",\n \"\",\n \"test test\"}", "vector<string> var = {\"a\",\n \"\",\n \"test test\"};"},
+                {"String[]", "{\"spaces  space\", \"a   a\"}", "vector<string> var = {\"spaces  space\", \"a   a\"};"},
 
-                {"double[]", "{ 1e9, -3.e-012, -4, 5 }", "double var[] = { 1e9, -3.e-012, -4, 5 };"},
+                {"double[]", "{ 1e9, -3.e-012, -4, 5 }", "vector<double> var = { 1e9, -3.e-012, -4, 5 };"},
 
-                {"long[]", "{ 0, -1, 1, 2147483648,\n-2147483649, 9223372036854775807, -9223372036854775808}", "long long var[] = {0, -1, 1, 2147483648LL, -2147483649LL, 9223372036854775807LL, -9223372036854775808LL};"},
+                {"long[]", "{ 0, -1, 1, 2147483648,\n-2147483649, 9223372036854775807, -9223372036854775808}", "vector<long long> var = {0, -1, 1, 2147483648LL, -2147483649LL, 9223372036854775807LL, -9223372036854775808LL};"},
         };
         return Arrays.asList(data);
     }
