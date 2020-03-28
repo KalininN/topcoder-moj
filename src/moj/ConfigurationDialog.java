@@ -22,6 +22,7 @@ class ConfigurationDialog extends JDialog implements ActionListener {
 
     private JCheckBox switchCheckBox        = new JCheckBox();
     private JCheckBox javaSupportCheckBox   = new JCheckBox();
+    private JCheckBox useStdoutCheckBox     = new JCheckBox();
 
     private JButton saveButton		        = new JButton("Save");
     private JButton closeButton		        = new JButton("Close");
@@ -89,6 +90,13 @@ class ConfigurationDialog extends JDialog implements ActionListener {
         javaSupportCheckBox.setToolTipText("Uncheck if you want to use a different plug-in to generate Java test code.");
         javaSupportCheckBox.setSelected(pref.getEnableJavaSupport());
 
+        // use stdout checkbox
+        useStdoutCheckBox.setText("Use stdout instead of stderr to print results (C++)");
+        useStdoutCheckBox.setForeground(Common.FG_COLOR);
+        useStdoutCheckBox.setBackground(Common.WPB_COLOR);
+        useStdoutCheckBox.setToolTipText("If checked, std::cout is used. If unchecked, std::cerr is used.");
+        useStdoutCheckBox.setSelected(pref.getUseStdout());
+
         contentPane.add(compilerLabel, new GridBagConstraints(0,0,1,1,1,1,GridBagConstraints.NORTHWEST, GridBagConstraints.BOTH, new Insets(10,10,4,4),0,0));
         contentPane.add(gcc11RadioButton, new GridBagConstraints(1,0,1,1,1,1,GridBagConstraints.NORTHWEST, GridBagConstraints.BOTH, new Insets(10,10,4,4),0,0));
         contentPane.add(gcc98RadioButton, new GridBagConstraints(1,1,1,1,1,1,GridBagConstraints.NORTHWEST, GridBagConstraints.BOTH, new Insets(10,10,4,4),0,0));
@@ -97,6 +105,7 @@ class ConfigurationDialog extends JDialog implements ActionListener {
         contentPane.add(placeholdersTextField, new GridBagConstraints(1,3,1,1,1,1,GridBagConstraints.NORTHWEST, GridBagConstraints.BOTH, new Insets(10,10,4,4),0,0));
         contentPane.add(switchCheckBox, new GridBagConstraints(0,4,3,1,1,1,GridBagConstraints.NORTHWEST, GridBagConstraints.BOTH, new Insets(10,10,4,4),0,0));
         contentPane.add(javaSupportCheckBox, new GridBagConstraints(0,5,3,1,1,1,GridBagConstraints.NORTHWEST, GridBagConstraints.BOTH, new Insets(10,10,4,4),0,0));
+        contentPane.add(useStdoutCheckBox, new GridBagConstraints(0,6,3,1,1,1,GridBagConstraints.NORTHWEST, GridBagConstraints.BOTH, new Insets(10,10,4,4),0,0));
         contentPane.add(saveButton, new GridBagConstraints(1,6,1,1,0,0, GridBagConstraints.NORTHWEST, GridBagConstraints.NONE, new Insets(10,10,10,10),0,0));
         contentPane.add(closeButton, new GridBagConstraints(2,6,1,1,0,0, GridBagConstraints.NORTHWEST, GridBagConstraints.NONE, new Insets(10,0,10,10),0,0));
 

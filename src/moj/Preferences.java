@@ -17,6 +17,7 @@ public class Preferences {
     public final static String KEY_NUMPLACEHOLDERS = "moj.config.numplaceholders";
     public final static String KEY_LANGUAGESWITCHWORKAROUND = "moj.config.languageswitchworkaround";
     public final static String KEY_ENABLEJAVASUPPORT = "moj.config.enablejavasupport";
+    public final static String KEY_USESTDOUT = "moj.config.usestdout";
 
     public final static String TARGETCOMPILER_GCC11 = "GCC -std=c++11";
     public final static String TARGETCOMPILER_GCC98 = "GCC (deprecated)";
@@ -63,6 +64,14 @@ public class Preferences {
 
     public void setLanguageSwitchWorkaround(boolean enabled) {
         pref.setProperty(KEY_LANGUAGESWITCHWORKAROUND, enabled ? "true" : "false");
+    }
+
+    public boolean getUseStdout() {
+        return getBooleanProperty(KEY_USESTDOUT, true);
+    }
+
+    public void setUseStdout(boolean enabled) {
+        pref.setProperty(KEY_USESTDOUT, enabled ? "true" : "false");
     }
 
     protected String getStringProperty(String key, String defaultValue) {

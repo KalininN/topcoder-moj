@@ -32,6 +32,18 @@ public class JavaHarnessGenerator implements HarnessGenerator {
                 "\t}";
     }
 
+    public String generateMultiprocessMain() {
+        return
+                "public static void main(String[] args) {\n" +
+                "\t\tif (args.length == 0) {\n" +
+                "\t\t\t" + m_problem.getClassName() + "Harness.run_test(-1);\n" + 
+                "\t\t} else {\n" +
+                "\t\t\tfor (int i=0; i<args.length; ++i)\n" +
+                "\t\t\t\t" + m_problem.getClassName() + "Harness.run_test(Integer.valueOf(args[i]));\n" +
+                "\t\t}\n" +
+                "\t}";
+    }
+
     public String generateRunTest() {
         return m_problem.getClassName() + "Harness.run_test(-1);";
     }

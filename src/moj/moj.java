@@ -14,8 +14,9 @@ public class moj {
     // Constants
     private static final String k_TESTCODE      = "$TESTCODE$";
     private static final String k_DEFAULTMAIN   = "$DEFAULTMAIN$";
+    private static final String k_MULTIPROCESSMAIN   = "$MULTIPROCESSMAIN$";
     private static final String k_RUNTEST       = "$RUNTEST$";
-    private static final String k_VERSION       = "\n// Powered by moj 4.18.1 [modified TZTester]";
+    private static final String k_VERSION       = "\n// Powered by moj 4.18.2 [modified TZTester]";
 
     // Preferences
     private Preferences pref = new Preferences();
@@ -25,6 +26,7 @@ public class moj {
         m_Tags.put(k_TESTCODE, "");
         m_Tags.put(k_RUNTEST, "");
         m_Tags.put(k_DEFAULTMAIN, "");
+        m_Tags.put(k_MULTIPROCESSMAIN, "");
 
         // If there is source and the language matches that in the actual code, return it
         if (source.length() > 0 && 
@@ -57,6 +59,7 @@ public class moj {
 
         m_Tags.put(k_TESTCODE, generator.generateTestCode());
         m_Tags.put(k_DEFAULTMAIN, generator.generateDefaultMain());
+        m_Tags.put(k_MULTIPROCESSMAIN, generator.generateMultiprocessMain());
         m_Tags.put(k_RUNTEST, generator.generateRunTest());
         return "";
     }

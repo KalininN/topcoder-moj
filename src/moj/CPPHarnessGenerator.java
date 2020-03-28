@@ -49,6 +49,31 @@ public class CPPHarnessGenerator implements HarnessGenerator {
                 "}";
     }
 
+    public String generateMultiprocessMain() {
+        return
+                "#include <unistd.h>\n" +
+                "int main(int argc,char *argv[]) {\n" + 
+				"\tint x = argc == 1 ? 0 : atoi(argv[1]);\n" +
+				"\tint R = moj_harness :: run_test_case(x);\n" +
+				"\tif (argc == 2) return 0;\n" +
+				"\tint total = argc < 4 ? 0 : atoi(argv[3]), correct = argc < 5 ? 0 : atoi(argv[4]);\n" +
+				"\tif(R == -1) {\n" +
+				"\t\tif(total == 0) printf(\"No test cases run.\\n\");\n" +
+				"\t\telse if(total == correct) printf(\"All %d tests passed!\\n\", total);\n" +
+				"\t\telse printf(\"Some cases FAILED (passed %d of %d).\\n\", correct, total);\n" +
+				"\t\treturn 0;\n" +
+				"\t}\n" +
+				"\tx++;\n" +
+				"\ttotal++;\n" +
+				"\tcorrect += R;\n" +
+				"\tchar txt[30], tot[30], corr[30];\n" +
+				"\tsprintf(txt, \"%d\", x);\n" +
+				"\tsprintf(tot, \"%d\", total);\n" +
+				"\tsprintf(corr, \"%d\", correct);\n" +
+				"\texeclp(argv[0], argv[0], txt, txt, tot, corr, NULL);\n" +
+				"}\n";
+    }
+
     public String generateRunTest() {
         return "moj_harness::run_test();";
     }
@@ -351,6 +376,10 @@ public class CPPHarnessGenerator implements HarnessGenerator {
             sb.append(">\n");
         }
         for (String s : code.lines) {
+			if (m_pref.getUseStdout())
+			{
+				s = Pattern.compile("std::cerr").matcher(s).replaceAll("std::cout");
+			}
             sb.append(s);
             sb.append('\n');
         }
